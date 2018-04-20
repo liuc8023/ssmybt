@@ -1,0 +1,85 @@
+##########################################################
+##################  所有profile共有的配置  #################
+##########################################################
+
+###################  ssmybt配置  ###################
+ssmybt:
+  swagger-open: true #是否开启swagger (true/false)
+  muti-datasource-open: true #是否开启多数据源，读写分离(true/false)
+  spring-session-open: false #是否开启spring session,如果是多机环境需要开启(true/false)
+  session-open: true #是否开启session超时验证（受影响的类SessionTimeoutInterceptor） (true/false)
+  kaptchaOnOff: true #是否开启验证码
+  session-invalidate-time: 6000000 #session失效时间(只在单机环境下生效，多机环境在SpringSessionConfig类中配置) 单位：毫秒
+  session-validation-interval: 9000 #多久检测一次失效的session(只在单机环境下生效) 单位：毫秒
+  file-upload-path:  /static/img  #文件上传目录(不配置的话为java.io.tmpdir目录)
+
+###################  项目启动端口  ###################
+
+server:
+  port: 8080 #服务器端口根据上线需要进行修改
+
+###################  beetl配置  ###################
+beetl:
+  delimiter-statement-start: \@   #开始结束标签(yaml不允许@开头)
+  delimiter-statement-end: null
+  resource-tagroot: common/tags   #自定义标签文件Root目录和后缀
+  resource-tagsuffix: tag
+  resource-auto-check: true #是否检测文件变化,开发用true合适，但线上要改为false
+  
+###################  spring配置  ###################
+spring:
+  profiles:
+    #指定读取配置文件:dev(开发环境),prod(生产环境),qa(测试环境)
+    active: dev #激活哪一个环境的配置文件
+  datasource:
+    db-name: ssmybt #数据库名
+  resources:
+    static-locations: classpath:/static/
+  mvc:
+    static-path-pattern: /static/**
+  http:
+    converters:
+      preferred-json-mapper: fastjson
+    multipart:
+      max-request-size: 100MB #最大请求大小
+      max-file-size: 100MB #最大文件大小
+
+#  devtools:
+#    restart:
+#      enabled: false #是否开启开发者工具（true/false）
+#      additional-paths: src/main/java
+#      exclude: static/**,WEB-INF/view/**
+#  aop:
+#    proxy-target-class: true #false为启用jdk默认动态代理,true为cglib动态代理
+  redis:
+    host: localhost # Redis服务器地址
+    port: 6379  # Redis服务器连接端口
+    password: # Redis服务器连接密码（默认为空）
+    lettuce: 
+      shutdown-timeout: 100000 # 连接超时时间（毫秒）
+      pool:
+        max-idle: 8 # 连接池中的最大空闲连接
+        min-idle: 0 # 连接池中的最小空闲连接
+        max-active: 8 # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+  shiro:
+      md5:
+        hashIterations: 3
+      rememberMeCookieTimeout: 60 #记住我cookie生效时间30天(2592000秒) ,单位秒;
+##日志,看上面的spring配置激活的是那个环境，就是用哪个环境的logback-*.xml
+log:
+  level:
+    root: info #root日志以WARN级别输出
+    com.springboot.ssmybt: DEBUG
+    org.springframework: WARN
+    org.thymeleaf: WARN
+    org.apache: WARN
+  path: D:\\logs\\dev #开发环境log日志文件存放的本地地址
+  file: ssmybt
+
+###################  mybatis-plus配置  ###################
+mybatis:
+  mapperLocations: classpath*:com/springboot/ssmybt/module/*/mapper/*Mapper.xml
+  typeAliasesPackage: com.springboot.ssmybt.module.*.entity
+
+
