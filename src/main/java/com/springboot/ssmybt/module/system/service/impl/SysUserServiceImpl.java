@@ -46,7 +46,6 @@ public class SysUserServiceImpl extends IServiceImpl<SysUser> implements SysUser
 	@Autowired
 	private SysUserMapper userMapper;
 
-	@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public SysUser selectUserByNickName(String NickName) {
 		logger.info("根据用户名获取用户对象，从数据库中获取");
 		return userMapper.selectUserByNickName(NickName);

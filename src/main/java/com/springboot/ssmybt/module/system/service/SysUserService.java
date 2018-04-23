@@ -17,6 +17,9 @@ import com.springboot.ssmybt.core.base.service.IService;
 import com.springboot.ssmybt.core.datascope.DataScope;
 import com.springboot.ssmybt.module.system.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
 *
@@ -58,22 +61,24 @@ public interface SysUserService extends IService<SysUser> {
 
 	SysUser selectById(Integer userId);
 
-
+	@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	void insert(SysUser createUser);
 
-
+	@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	void updateById(SysUser createUser);
 
 	/**
      * 修改用户状态
      *
      */
+	@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     int updateStatus(@Param("userId") Integer userId, @Param("status") int status);
     
     /**
      * 设置用户的角色
      *
      */
+	@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     int updateRoles(@Param("userId") Integer userId, @Param("roleIds") String roleIds);
 
 }

@@ -33,13 +33,13 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import com.github.pagehelper.PageInterceptor;
 import com.springboot.ssmybt.core.mutidatasource.MyAbstractRoutingDataSource;
 import com.springboot.ssmybt.core.mutidatasource.Interceptor.SqlPrintInterceptor;
 import com.springboot.ssmybt.core.mutidatasource.constant.DataSourceType;
-import com.springboot.ssmybt.core.utils.SpringContextUtil;
 
 /**
 *
@@ -57,7 +57,7 @@ import com.springboot.ssmybt.core.utils.SpringContextUtil;
 @Configuration
 @EnableTransactionManagement(order = 2) // 由于引入多数据源，所以让spring事务的aop要在多数据源切换aop的后面
 @MapperScan(basePackages = { "com.springboot.ssmybt.module.*.dao" })
-public class MybatisPlusConfig {
+public class MybatisPlusConfig implements TransactionManagementConfigurer{
 	private static Logger log = LoggerFactory.getLogger(MybatisPlusConfig.class);
 	@Value("${spring.datasource.readSize}")
 	private String dataSourceSize;
@@ -167,10 +167,18 @@ public class MybatisPlusConfig {
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 
-	// 事务管理
+	/**
+	 * 事务配置,考虑多数据源情况下
+	 * @return
+	 */
 	@Bean
-	public PlatformTransactionManager annotationDrivenTransactionManager() {
-		return new DataSourceTransactionManager((DataSource) SpringContextUtil.getBean("roundRobinDataSouceProxy"));
+	public PlatformTransactionManager txManager() {
+		return new DataSourceTransactionManager(roundRobinDataSouceProxy());
 	}
+	
+    @Override
+    public PlatformTransactionManager annotationDrivenTransactionManager() {
+        return txManager();
+    }
 
 }
