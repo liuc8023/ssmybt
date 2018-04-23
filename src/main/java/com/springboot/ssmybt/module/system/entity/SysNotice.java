@@ -13,7 +13,7 @@ import java.util.Date;
  *
  */
 @TableName("sys_notice")
-public class SysNotice extends Model<SysNotice> {
+public class SysNotice extends Model<SysNotice> implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

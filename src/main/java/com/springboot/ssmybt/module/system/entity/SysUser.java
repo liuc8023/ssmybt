@@ -8,10 +8,14 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+/**
+ * 用户信息表
+ * @author liuc
+ *
+ */
 @TableName("sys_user")
 @ApiModel(description="用户对象user")
-public class SysUser extends Model<SysUser> {
+public class SysUser extends Model<SysUser> implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

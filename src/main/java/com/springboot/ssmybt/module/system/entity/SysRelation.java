@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  */
 @TableName("sys_relation")
-public class SysRelation extends Model<SysRelation> {
+public class SysRelation extends Model<SysRelation> implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

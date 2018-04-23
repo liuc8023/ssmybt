@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.enums.IdType;
  *
  */
 @TableName("sys_login_log")
-public class SysLoginLog extends Model<SysLoginLog> {
+public class SysLoginLog extends Model<SysLoginLog> implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

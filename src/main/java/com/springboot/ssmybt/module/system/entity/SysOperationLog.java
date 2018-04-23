@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 
 @TableName("sys_operation_log")
-public class SysOperationLog extends Model<SysOperationLog> {
+public class SysOperationLog extends Model<SysOperationLog> implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

@@ -31,7 +31,7 @@ import com.baomidou.mybatisplus.enums.IdType;
 *
 */
 @Table(name = "sys_menu")
-public class SysMenu extends Model<SysMenu> {
+public class SysMenu extends Model<SysMenu> implements Serializable{
 	 private static final long serialVersionUID = 1L;
 
 	    /**

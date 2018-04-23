@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  */
 @TableName("sys_dict")
-public class SysDict extends Model<SysDict> {
+public class SysDict extends Model<SysDict> implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

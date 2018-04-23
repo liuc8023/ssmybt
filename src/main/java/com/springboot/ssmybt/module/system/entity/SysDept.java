@@ -32,7 +32,7 @@ import com.baomidou.mybatisplus.enums.IdType;
 *
 */
 @TableName("sys_dept")
-public class SysDept extends Model<SysDept> {
+public class SysDept extends Model<SysDept> implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

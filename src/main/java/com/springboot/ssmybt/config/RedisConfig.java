@@ -16,6 +16,9 @@ import org.springframework.cache.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +28,6 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -88,51 +90,63 @@ public class RedisConfig extends CachingConfigurerSupport{
          return new KeyGenerator() {
              @Override
              public Object generate(Object target, Method method, Object... params) {
-            	 //格式化缓存key字符串
-                 StringBuilder sb = new StringBuilder();
-                 //类名+方法名
-                 sb.append(target.getClass().getName());
-                 //追加方法名
-                 sb.append(method.getName());
-                 //遍历参数并且追加
-                 for (Object obj : params) {
-                     sb.append(obj.toString());
-                 }
-                 logger.info("调用Redis缓存Key: " + sb.toString());
-                 return sb.toString();
+                //格式化缓存key字符串
+                StringBuilder sb = new StringBuilder();
+ 				String[] value = new String[1];
+ 				Cacheable cacheable = method.getAnnotation(Cacheable.class);
+ 				if (cacheable != null) {
+ 					value = cacheable.value();
+ 				}
+ 				CachePut cachePut = method.getAnnotation(CachePut.class);
+ 				if (cachePut != null) {
+ 					value = cachePut.value();
+ 				}
+ 				CacheEvict cacheEvict = method.getAnnotation(CacheEvict.class);
+ 				if (cacheEvict != null) {
+ 					value = cacheEvict.value();
+ 				}
+ 				sb.append(value[0]);
+ 				//遍历参数并且追加
+ 				for (Object obj : params) {
+ 					sb.append(":" + obj.toString());
+ 				}
+ 				logger.info("调用Redis缓存Key: " + sb.toString());
+                return sb.toString();
              }
 
          };
      }
 
- 	/**
- 	 * 设置Redis缓存过期时间管理器
- 	 * @param redisTemplate
+     
+     /**
+ 	 * 重写Redis序列化方式，使用Json方式:
+ 	 * 当我们的数据存储到Redis的时候，我们的键（key）和值（value）都是通过Spring提供的Serializer序列化到数据库的。RedisTemplate默认使用的是JdkSerializationRedisSerializer，StringRedisTemplate默认使用的是StringRedisSerializer。
+ 	 * Spring Data JPA为我们提供了下面的Serializer：
+ 	 * GenericToStringSerializer、Jackson2JsonRedisSerializer、JacksonJsonRedisSerializer、JdkSerializationRedisSerializer、OxmSerializer、StringRedisSerializer。
+ 	 * 在此我们将自己配置RedisTemplate并定义Serializer。
+ 	 * @param redisConnectionFactory
  	 * @return
  	 */
-//     @Bean
-//     public CacheManager cacheManager(RedisTemplate<?, ?> redisTemplate) {
-//    	 logger.info("RedisCacheConfig.cacheManager init");
-//         RedisCacheManager rcm = new RedisCacheManager(redisTemplate);
-//         //设置缓存过期时间
-//         rcm.setDefaultExpiration(timeout); // 10min，便于测试
-//         return rcm;
-//     }
-     
      @Bean
-     public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
+     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory)
+     {
     	 logger.info("RedisCacheConfig.redisTemplate init");
-         StringRedisTemplate template = new StringRedisTemplate(factory);
          Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<Object>(Object.class);
          ObjectMapper om = new ObjectMapper();
          om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
          om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
          jackson2JsonRedisSerializer.setObjectMapper(om);
+         RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
+         template.setConnectionFactory(redisConnectionFactory);
+         // 设置键（key）的序列化采用Jackson2JsonRedisSerializer。
+         template.setKeySerializer(jackson2JsonRedisSerializer);
+         template.setHashKeySerializer(jackson2JsonRedisSerializer);
+         // 设置值（value）的序列化采用Jackson2JsonRedisSerializer。
          template.setValueSerializer(jackson2JsonRedisSerializer);
+         template.setHashValueSerializer(jackson2JsonRedisSerializer);
          template.afterPropertiesSet();
          return template;
      }
-     
      
      @Bean  
      public CacheErrorHandler errorHandler() {

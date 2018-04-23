@@ -19,20 +19,12 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 
 /**
-*
-* 项目名称：ssmybt
-* 类名称：SysRole
-* 类描述： 角色表
-* 创建人：liuc
-* 创建时间：2018年4月9日 上午11:20:03
-* 修改人：liuc
-* 修改时间：2018年4月9日 上午11:20:03
-* 修改备注：
-* @version
-*
-*/
+ * 角色表
+ * @author liuc
+ *
+ */
 @TableName("sys_role")
-public class SysRole extends Model<SysRole> {
+public class SysRole extends Model<SysRole> implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
