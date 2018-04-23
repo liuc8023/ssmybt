@@ -18,4 +18,6 @@ public interface SysOperationLogMapper extends MyMapper<SysOperationLog> {
     List<Map<String, Object>> getOperationLogs(@Param("page") Page<SysOperationLog> page, @Param("beginTime") String beginTime, @Param("endTime") String endTime, @Param("logName") String logName, @Param("logType") String logType, @Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
 
 	SysOperationLog selectById(Integer id);
+
+	void deleteAll();
 }

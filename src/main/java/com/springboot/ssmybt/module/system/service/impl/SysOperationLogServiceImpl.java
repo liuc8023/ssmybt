@@ -27,5 +27,10 @@ public class SysOperationLogServiceImpl extends IServiceImpl<SysOperationLog> im
 	public SysOperationLog selectById(Integer id) {
 		return operationLogMapper.selectById(id);
 	}
+
+	@Override
+	public void deleteAll() {
+		operationLogMapper.deleteAll();
+	}
 	
 }

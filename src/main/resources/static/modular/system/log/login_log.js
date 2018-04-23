@@ -42,7 +42,7 @@ LoginLog.check = function () {
  */
 LoginLog.delLog = function () {
     Feng.confirm("是否清空所有日志?", function () {
-        var ajax = Feng.baseAjax("/loginLog/delLoginLog", "清空日志");
+        var ajax = Feng.baseAjax("/loginLog/delLoginLog", "清空日志","DELETE");
         ajax.start();
         LoginLog.table.refresh();
     });

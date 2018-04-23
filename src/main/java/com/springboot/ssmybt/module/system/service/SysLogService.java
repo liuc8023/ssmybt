@@ -11,4 +11,6 @@ public interface SysLogService extends IService<SysLoginLog> {
 	List<Map<String, Object>> selectLoginLogs(Page<SysLoginLog> page, String beginTime, String endTime, String logName,
 			String orderByField, boolean asc);
 
+	void deleteAll();
+
 }

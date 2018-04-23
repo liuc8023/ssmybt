@@ -19,7 +19,6 @@ import com.springboot.ssmybt.common.constant.Const;
 import com.springboot.ssmybt.common.factory.PageFactory;
 import com.springboot.ssmybt.core.base.controller.BaseController;
 import com.springboot.ssmybt.module.system.entity.SysLoginLog;
-import com.springboot.ssmybt.module.system.entity.SysOperationLog;
 import com.springboot.ssmybt.module.system.service.SysLogService;
 import com.springboot.ssmybt.module.system.warpper.LogWarpper;
 
@@ -67,7 +66,7 @@ public class LoginLogController extends BaseController {
     @Permission(Const.ADMIN_NAME)
     @ResponseBody
     public Object delLog() {
-        SqlRunner.db().delete("delete from sys_login_log");
+        sysLogService.deleteAll();
         return super.SUCCESS_TIP;
     }
 }

@@ -88,8 +88,8 @@ var Feng = {
 
         $("body").bind("mousedown", onBodyDown);
     },
-    baseAjax: function (url, tip) {
-        var ajax = new $ax(Feng.ctxPath + url, function (data) {
+    baseAjax: function (url,tip,method) {
+        var ajax = new $ax(Feng.ctxPath + url,method, function (data) {
             Feng.success(tip + "成功!");
         }, function (data) {
             Feng.error(tip + "失败!" + data.responseJSON.message + "!");

@@ -16,4 +16,6 @@ public interface SysLoginLogMapper extends MyMapper<SysLoginLog> {
      * @Date 2017/4/16 23:48
      */
 	List<Map<String, Object>> selectLoginLogs(@Param("page") Page<SysLoginLog> page, @Param("beginTime") String beginTime, @Param("endTime") String endTime, @Param("logName") String logName, @Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+
+	void deleteAll();
 }

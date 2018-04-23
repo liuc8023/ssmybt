@@ -46,4 +46,8 @@
     <select id="selectById" parameterType="Integer">
     	select * from sys_operation_log where id = #{id}
     </select>
+    
+    <delete id="deleteAll">
+    	delete from sys_operation_log
+    </delete>
 </mapper>

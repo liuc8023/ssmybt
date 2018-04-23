@@ -21,4 +21,9 @@ public class SysLogServiceImpl extends IServiceImpl<SysLoginLog> implements  Sys
 		return loginLogMapper.selectLoginLogs(page,beginTime,endTime,logName,orderByField,asc);
 	}
 
+	@Override
+	public void deleteAll() {
+		loginLogMapper.deleteAll();
+	}
+
 }

@@ -59,7 +59,7 @@ OptLog.detail = function () {
  */
 OptLog.delLog = function () {
     Feng.confirm("是否清空所有日志?",function(){
-        var ajax = Feng.baseAjax("/log/delLog","清空日志");
+        var ajax = Feng.baseAjax("/log/delLog","清空日志","DELETE");
         ajax.start();
         OptLog.table.refresh();
     });
@@ -90,7 +90,7 @@ OptLog.search = function () {
 
 $(function () {
     var defaultColunms = OptLog.initColumn();
-    var table = new BSTable(OptLog.id, "/log/list", defaultColunms);
+    var table = new BSTable(OptLog.id, "/log/list", defaultColunms,"GET");
     table.setPaginationType("server");
     table.setQueryParams(OptLog.formParams());
     OptLog.table = table.init();

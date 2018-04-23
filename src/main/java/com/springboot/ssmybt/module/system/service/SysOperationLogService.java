@@ -14,4 +14,6 @@ public interface SysOperationLogService extends IService<SysOperationLog> {
 
 	SysOperationLog selectById(Integer id);
 
+	void deleteAll();
+
 }

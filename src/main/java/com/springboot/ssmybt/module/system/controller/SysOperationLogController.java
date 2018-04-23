@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import com.baomidou.mybatisplus.mapper.SqlRunner;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.springboot.ssmybt.common.annotion.BussinessLog;
 import com.springboot.ssmybt.common.annotion.Permission;
@@ -84,7 +83,7 @@ public class SysOperationLogController extends BaseController {
     @Permission(Const.ADMIN_NAME)
     @ResponseBody
     public Object delLog() {
-        SqlRunner.db().delete("delete from sys_operation_log");
+    	sysOperationLogService.deleteAll();
         return super.SUCCESS_TIP;
     }
 }
