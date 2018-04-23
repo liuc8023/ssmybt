@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.baomidou.mybatisplus.mapper.SqlRunner;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.springboot.ssmybt.common.annotion.BussinessLog;
 import com.springboot.ssmybt.common.annotion.Permission;
@@ -48,7 +46,8 @@ public class LoginLogController extends BaseController {
     /**
      * 查询登录日志列表
      */
-    @GetMapping("/list")
+    @SuppressWarnings({ "unchecked", "deprecation" })
+	@GetMapping("/list")
     @Permission(Const.ADMIN_NAME)
     @ResponseBody
     public Object list(@RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime, @RequestParam(required = false) String logName) {
