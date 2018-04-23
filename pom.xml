@@ -48,6 +48,10 @@
 		<mail.version>1.4.7</mail.version>
 		<log4j.version>1.2.17</log4j.version>
 		<poi.version>3.17</poi.version>
+		<mybatis-plus.version>2.1.8</mybatis-plus.version>
+		<beetl.version>2.7.28</beetl.version>
+		<swagger-ui-layer.version>0.0.4</swagger-ui-layer.version>
+		<thymeleaf-extras-shiro.version>1.2.1</thymeleaf-extras-shiro.version>
 	</properties>
 
 
@@ -145,7 +149,7 @@
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus</artifactId>
-			<version>2.1.8</version>
+			<version>${mybatis-plus.version}</version>
 		</dependency>
 
 		<dependency>
@@ -195,7 +199,7 @@
 		<dependency>
 			<groupId>com.github.theborakompanioni</groupId>
 			<artifactId>thymeleaf-extras-shiro</artifactId>
-			<version>1.2.1</version>
+			<version>${thymeleaf-extras-shiro.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.crazycake</groupId>
@@ -219,14 +223,14 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
+			<version>${commons-lang3.version}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 		<!-- commons-lang3 end -->
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>${javax.servlet-api.version}</version>
+			<version>${javax.servlet-api.version}</version><!--$NO-MVN-MAN-VER$-->
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -266,7 +270,7 @@
 		<dependency>
 			<groupId>com.github.caspar-chen</groupId>
 			<artifactId>swagger-ui-layer</artifactId>
-			<version>0.0.4</version>
+			<version>${swagger-ui-layer.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.swagger</groupId>
@@ -286,7 +290,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
+			<version>${junit.version}</version><!--$NO-MVN-MAN-VER$-->
 			<scope>test</scope>
 		</dependency>
 
@@ -300,7 +304,7 @@
 		<dependency>
 			<groupId>com.ibeetl</groupId>
 			<artifactId>beetl</artifactId>
-			<version>2.7.28</version>
+			<version>${beetl.version}</version>
 		</dependency>
 		<!-- beetl end -->
 
